@@ -1,0 +1,39 @@
+.sidebar-wrapper .sidebar-header img{
+  height: 4em;
+}
+
+.sidebar-menu {
+  background-color: #344b9e;
+}
+
+.sidebar-wrapper .sidebar-header {
+  padding: 2rem 2rem;
+}
+
+.sidebar-wrapper .menu {
+  margin-top: 0px;
+  min-height: calc(100vh - 192px);
+}
+
+.sidebar-wrapper .menu .sidebar-link {
+  color: #ffffff;
+}
+
+.sidebar-wrapper .menu .sidebar-title {
+  color: #c0c0c0;
+}
+
+.sidebar-menu {
+  padding: 1px 0;
+}
+
+.logo-auth {
+  width: 160px;
+}
+
+.auth-section{
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
