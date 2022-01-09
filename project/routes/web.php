@@ -15,3 +15,4 @@ use App\Http\Controllers\User\AuthController;
 */
 
 Route::get('/', [AuthController::class, 'login']);
+Route::get('/register', [AuthController::class, 'register']);
