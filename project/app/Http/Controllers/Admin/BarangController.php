@@ -22,8 +22,6 @@ class BarangController extends Controller
             'harga' => 'required',
         ]);
 
-       
-
         if ($validated) {
             if ($request->id) {
                 $bar = Barang::findOrFail($request->id);

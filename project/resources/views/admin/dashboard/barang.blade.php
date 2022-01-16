@@ -5,7 +5,7 @@
 @section('page-title', 'Barang')
 
 @section('header-script')
-  <link rel="stylesheet" href="{{ asset('assets/vendors/simple-datatables/style.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/vendors/simple-datatables/style.css') }}">
 @endsection
 
 
@@ -169,5 +169,6 @@
         editInputId.value = element.dataset.id;
       })
     });
+
 </script>
 @endsection
