@@ -22,11 +22,31 @@ class BarangController extends Controller
             'harga' => 'required',
         ]);
 
+       
+
         if ($validated) {
-            Barang::create($request->all());
-            return redirect()->route('admin.barang')->with('success', 'Barang berhasil disimpan');
+            if ($request->id) {
+                $bar = Barang::findOrFail($request->id);
+                $bar->update($request->except(['id']));
+                return redirect()->route('admin.barang')->with('success', 'Barang berhasil diubah');
+            }else {
+                Barang::create($request->all());
+                return redirect()->route('admin.barang')->with('success', 'Barang berhasil disimpan');
+            }
         }else {
             return redirect()->route('admin.barang')->with('error', 'Kesalahan mengisi data barang');
+        }
+    }
+
+    public function delete(Request $request, $id)
+    {
+        $bar = Barang::findOrFail($id);
+        $bar->delete();
+
+        if ($bar) {
+            return redirect()->route('admin.barang')->with('success', 'Barang berhasil di hapus');
+        } else {
+            return redirect()->route('admin.barang')->with('error', 'Kesalahan meghapus data barang');
         }
     }
 }
