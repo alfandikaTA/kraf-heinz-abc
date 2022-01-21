@@ -43,7 +43,7 @@
                     <i class="bi bi-justify fs-3"></i>
                 </a>
             </header>
-            
+
             <div class="page-heading">
                 <div class="page-title">
                     <div class="row">
@@ -54,7 +54,6 @@
                         <div class="col-12 col-md-6 order-md-2 order-first">
                             <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">@yield('page-title')</li>
                                 </ol>
                             </nav>
@@ -63,17 +62,13 @@
                 </div>
 
                 @yield('content')
-                
+
             </div>
 
             <footer>
                 <div class="footer clearfix mb-0 text-muted">
                     <div class="float-start">
-                        <p>2021 &copy; Mazer</p>
-                    </div>
-                    <div class="float-end">
-                        <p>Crafted with <span class="text-danger"><i class="bi bi-heart"></i></span> by <a
-                                href="http://ahmadsaugi.com">A. Saugi</a></p>
+                        <p>2022 &copy; Robby Arsyadani</p>
                     </div>
                 </div>
             </footer>

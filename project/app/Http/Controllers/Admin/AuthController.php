@@ -15,12 +15,12 @@ class AuthController extends Controller
     }
     public function login(Request $request)
     {
-        $credentials = $request->only(['username','password']);
+        $credentials = $request->only(['username', 'password']);
 
         if (Auth::guard('admin')->attempt($credentials)) {
             return redirect()->route('admin.dashboard')->with('message', 'Berhasil login');
         };
-        return redirect()->route('admin.login')->with('error', 'Gagal login, username / password salah'); 
+        return redirect()->route('admin.login')->with('error', 'Gagal login, username / password salah');
     }
     public function logout()
     {

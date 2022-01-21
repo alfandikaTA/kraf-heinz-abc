@@ -18,7 +18,7 @@
                 <button class="btn btn-primary w-100">Masuk</button>
             </div>
             <div class="col-md-6">
-                <a href="#" class="btn btn-primary w-100">Daftar</a>
+                <a href="{{route('user.register')}}" class="btn btn-primary w-100 ">Daftar</a>
             </div>
         </div>
     </div>
