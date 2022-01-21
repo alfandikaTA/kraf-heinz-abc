@@ -13,9 +13,6 @@ class AuthController extends Controller
     {
         return view('admin.login');
     }
-<<<<<<< HEAD
-}
-=======
     public function login(Request $request)
     {
         $credentials = $request->only(['username','password']);
@@ -31,4 +28,3 @@ class AuthController extends Controller
         return redirect()->route('admin.login');
     }
 }
->>>>>>> 2f5b05a93165cc49e08f040fb2ad4c8c863c6778
