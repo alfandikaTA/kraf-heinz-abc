@@ -3,19 +3,34 @@
 @section('title', 'Register')
 
 @section('content')
-<form>
+
+@if (session('error'))
+    <div class="alert alert-danger" role="alert">
+        {{ session('error') }}
+    </div>
+@endif
+
+@if (session('success'))
+    <div class="alert alert-success" role="alert">
+        <p><strong>{{ session('success') }}</strong></p>
+    </div>
+@endif
+
+<form method="POST" action="{{ route('user.register-act') }}">
+    @csrf 
+
     <div class="form-group mb-3">
-        <label for="nama_toko">Nama Toko</label>
-        <input type="text" class="form-control" id="nama_toko" name="nama_toko" placeholder="masukan nama toko">
+        <label for="nama">Nama Toko</label>
+        <input type="text" class="form-control" id="nama" name="nama" placeholder="masukan nama toko">
     </div>
     <div class="form-group mb-3">
-        <label for="nama_pemilik_toko">Nama Pemilik Toko</label>
-        <input type="text" class="form-control" id="nama_pemilik_toko" name="nama_pemilik_toko"
+        <label for="nama_pemilik">Nama Pemilik Toko</label>
+        <input type="text" class="form-control" id="nama_pemilik" name="nama_pemilik"
             placeholder="masukan nama pemilik">
     </div>
     <div class="form-group mb-3">
-        <label for="nomer_telephone">Nomor Telephone</label>
-        <input type="text" class="form-control" id="no_telephone" name="no_telephone"
+        <label for="telephone">Nomor Telephone</label>
+        <input type="text" class="form-control" id="telephone" name="telephone"
             placeholder="masukan nomer telephone">
     </div>
     <div class="form-group mb-3">
@@ -33,7 +48,7 @@
     <div class="mt-4">
         <div class="row">
             <div class="col-md-12">
-                <button class="btn btn-primary w-100">Mendaftar</button>
+                <button type="submit" class="btn btn-primary w-100">Mendaftar</button>
             </div>
         </div>
     </div>

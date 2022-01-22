@@ -15,7 +15,7 @@
     </div>
 @endif
 
-<form method="POST" action="{{ route('admin.login') }}">
+<form method="POST" action="{{ route('admin.login-act') }}">
     @csrf 
     
     <div class="form-group position-relative has-icon-left mb-4">

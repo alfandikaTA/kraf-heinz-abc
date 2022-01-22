@@ -41,4 +41,7 @@
                 </table>
             </div>
         </div>
+    </div>
 </section>
+
+@endsection

@@ -28,26 +28,33 @@ class AuthController extends Controller
     }
 
 
-    public function indexreq()
+    public function indexRegister()
     {
-        $register = User::all();
-        return view('user.register', ['users' => $register]);
+        return view('user.register');
     }
+
+
     public function register(Request $request)
     {
         $validated = $request->validate([
-            'nama_toko' => 'required',
-            'name' => 'required',
+            'nama' => 'required',
+            'nama_pemilik' => 'required',
             'telephone' => 'required',
             'alamat' => 'required',
-            'email' => 'required',
+            'username' => 'required',
             'password' => 'required',
         ]);
         if ($validated) {
             User::create($request->all());
-            return redirect()->route('user.register')->with('success', 'Data berhasil disimpan');
+            return redirect()->route('user.login')->with('success', 'Berhasil register, silahkan login');
         } else {
             return redirect()->route('user.register')->with('error', 'Kesalahan mengisi data Toko');
         }
+    }
+
+    public function logout()
+    {
+        Auth::guard('user')->logout();
+        return redirect()->route('user.login');
     }
 }

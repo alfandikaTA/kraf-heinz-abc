@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\User\AuthController as UserAuthController;;
+use App\Http\Controllers\User\AuthController as UserAuthController;
+use App\Http\Controllers\User\DashboardController as UserDashboardController;
+use App\Http\Controllers\User\BarangController as UserBarangController;
 
 
 
@@ -16,14 +18,16 @@ use App\Http\Controllers\User\AuthController as UserAuthController;;
 |
 */
 
-Route::name('user.')->namespace('User')->prefix('user')->group(function () {
+Route::name('user.')->namespace('User')->group(function () {
 
     Route::namespace('Auth')->group(function () {
         // Login
         Route::get('/', [UserAuthController::class, 'index'])->name('login');
-        Route::post('/', [UserAuthController::class, 'login'])->name('login');
-        Route::get('/', [UserAuthController::class, 'indexreq'])->name('login');
-        Route::get('/register', [UserAuthController::class, 'register'])->name('login');
+        Route::post('/', [UserAuthController::class, 'login'])->name('login-act');
+
+        // Register 
+        Route::get('/register', [UserAuthController::class, 'indexRegister'])->name('register');
+        Route::post('/register', [UserAuthController::class, 'register'])->name('register-act');
     });
 
     Route::namespace('Auth')->group(function () {
@@ -31,9 +35,9 @@ Route::name('user.')->namespace('User')->prefix('user')->group(function () {
         Route::post('/logout', [UserAuthController::class, 'logout'])->name('logout');
 
         // Dashboard 
-        Route::get('/dashboard', [UserAuthController::class, 'index'])->name('dashboard');
+        Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
 
         // Barang
-        Route::get('/barang', [UserAuthController::class, 'index'])->name('barang');
+        Route::get('/barang', [UserBarangController::class, 'index'])->name('barang');
     });
 });

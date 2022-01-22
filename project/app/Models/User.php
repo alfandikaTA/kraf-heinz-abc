@@ -13,7 +13,8 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
-    protected $guarded = [];
+    protected $fillable = ['username', 'nama', 'nama_pemilik', 'alamat', 'telephone', 'password'];
+    // protected $guarded = [];
 
     public function setPasswordAttribute($value)
     {

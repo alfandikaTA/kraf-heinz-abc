@@ -6,8 +6,8 @@
             <span>Dashboard</span>
         </a>
     </li>
-    <li class="sidebar-item {{ (request()->routeIs('admin.barang')) ? 'active' : '' }}">
-        <a href="{{ route("admin.barang") }}" class='sidebar-link'>
+    <li class="sidebar-item {{ (request()->routeIs('user.barang')) ? 'active' : '' }}">
+        <a href="{{ route("user.barang") }}" class='sidebar-link'>
             <i class="bi bi-box"></i>
             <span>Data Barang</span>
         </a>

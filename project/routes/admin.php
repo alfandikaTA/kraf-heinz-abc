@@ -14,7 +14,7 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
   Route::namespace('Auth')->middleware(AdminIsNotLogin::class)->group(function(){
     // Login
     Route::get('/', [AdminAuthController::class, 'index'])->name('login');
-    Route::post('/', [AdminAuthController::class, 'login'])->name('login');
+    Route::post('/', [AdminAuthController::class, 'login'])->name('login-act');
   });
 
   Route::namespace('Auth')->middleware(AdminIsLogin::class)->group(function(){
