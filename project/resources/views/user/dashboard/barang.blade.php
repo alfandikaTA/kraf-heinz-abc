@@ -21,6 +21,7 @@
                     <thead>
                         <tr>
                             <th>Nomer</th>
+                            <th>Gambar</th>
                             <th>Nama</th>
                             <th>Quantity</th>
                             <th>Harga</th>
@@ -31,10 +32,10 @@
                         @foreach ($barangs as $barang)
                         <tr>
                             <td>{{ $loop->index+1 }}</td>
+                            <td><img src="{{ $barang->image() }}" height="75" /></td>
                             <td>{{ $barang->nama }}</td>
                             <td>{{ $barang->quantity }}</td>
                             <td>{{ $barang->harga }}</td>
-                            </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -43,5 +44,4 @@
         </div>
     </div>
 </section>
-
 @endsection

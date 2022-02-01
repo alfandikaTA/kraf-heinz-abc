@@ -19,7 +19,7 @@ class AuthController extends Controller
     }
     public function login(Request $request)
     {
-        $credentials = $request->only(['username', 'password']);
+        $credentials = $request->only(['email', 'password']);
 
         if (Auth::guard('user')->attempt($credentials)) {
             return redirect()->route('user.dashboard')->with('message', 'Berhasil login');
@@ -37,11 +37,11 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validated = $request->validate([
-            'nama' => 'required',
-            'nama_pemilik' => 'required',
+            'nama_toko' => 'required',
+            'name' => 'required',
             'telephone' => 'required',
             'alamat' => 'required',
-            'username' => 'required',
+            'email' => 'required',
             'password' => 'required',
         ]);
         if ($validated) {

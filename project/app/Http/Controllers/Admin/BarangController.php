@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Barang;
 
 class BarangController extends Controller
@@ -24,14 +25,34 @@ class BarangController extends Controller
 
         if ($validated) {
             if ($request->id) {
-                $bar = Barang::findOrFail($request->id);
-                $bar->update($request->except(['id']));
+                $barang = Barang::find($request->id);
+                $barang->nama = $request->nama;
+                $barang->quantity = $request->quantity;
+                $barang->harga = $request->harga;
+                if ($request->hasFile('image')) {
+                    $barang->delete_image();
+                    $image = $request->file('image');
+                    $name = rand(1000, 9999) . $image->getClientOriginalName();
+                    $image->move('project/public/images/', $name);
+                    $barang->image = $name;
+                }
+                $barang->save();
                 return redirect()->route('admin.barang')->with('success', 'Barang berhasil diubah');
-            }else {
-                Barang::create($request->all());
+            } else {
+                $barang = new Barang();
+                $barang->nama = $request->nama;
+                $barang->quantity = $request->quantity;
+                $barang->harga = $request->harga;
+                if ($request->hasFile('image')) {
+                    $image = $request->file('image');
+                    $name = rand(1000, 9999) . $image->getClientOriginalName();
+                    $image->move('project/public/images/', $name);
+                    $barang->image = $name;
+                }
+                $barang->save();
                 return redirect()->route('admin.barang')->with('success', 'Barang berhasil disimpan');
             }
-        }else {
+        } else {
             return redirect()->route('admin.barang')->with('error', 'Kesalahan mengisi data barang');
         }
     }
@@ -39,7 +60,9 @@ class BarangController extends Controller
     public function delete(Request $request, $id)
     {
         $bar = Barang::findOrFail($id);
+        $bar->delete_image();
         $bar->delete();
+
 
         if ($bar) {
             return redirect()->route('admin.barang')->with('success', 'Barang berhasil di hapus');

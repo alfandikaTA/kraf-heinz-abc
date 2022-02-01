@@ -44,6 +44,7 @@
                 <thead>
                     <tr>
                         <th>Nomer</th>
+                        <th>Gambar</th>
                         <th>Nama</th>
                         <th>Quantity</th>
                         <th>Harga</th>
@@ -54,14 +55,16 @@
                     @foreach ($barangs as $barang)
                     <tr>
                         <td>{{ $loop->index+1 }}</td>
+                        <td><img src="{{ $barang->image() }}" height="75" /></td>
                         <td>{{ $barang->nama }}</td>
                         <td>{{ $barang->quantity }}</td>
                         <td>{{ $barang->harga }}</td>
                         <td>
                             <button type="button" class="btn btn-warning btn-edit btn-edit-barang"
-                                data-id="{{ $barang->id}}" data-nama="{{ $barang->nama}}"
-                                data-quantity="{{ $barang->quantity}}" data-harga="{{ $barang->harga}}"
-                                ddata-bs-toggle="modal" data-bs-toggle="modal" data-bs-target="#modalEdit">
+                                data-id="{{ $barang->id}}" data-image="{{ $barang->image}}"
+                                data-nama="{{ $barang->nama}}" data-quantity="{{ $barang->quantity}}"
+                                data-harga="{{ $barang->harga}}" ddata-bs-toggle="modal" data-bs-toggle="modal"
+                                data-bs-target="#modalEdit">
                                 <i class="fas fa-edit">Edit</i>
                             </button>
                         </td>
@@ -84,14 +87,17 @@
 <div class="modal fade" id="modalAdd" tabindex="-1" aria-labelledby="modalAddLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered ">
         <div class="modal-content">
-            <form method="POST" action="{{ route('admin.barang-add') }}">
+            <form method="POST" action="{{ route('admin.barang-add') }}" enctype="multipart/form-data">
                 @csrf
-
                 <div class="modal-header">
                     <h5 class="modal-title">Tambah barang</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="inputImage" class="form-label">Gambar</label>
+                        <input type="file" class="form-control" id="inputImage" name="image">
+                    </div>
                     <div class="mb-3">
                         <label for="inputNama" class="form-label">Nama</label>
                         <input type="text" class="form-control" id="inputNama" name="nama"
@@ -120,7 +126,7 @@
 <div class="modal fade" id="modalEdit" tabindex="-1" aria-labelledby="modalEdit" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered ">
         <div class="modal-content">
-            <form method="POST" action="{{ route('admin.barang-add') }}">
+            <form action="{{ route('admin.barang-add') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <input type="hidden" id="editInputId" name="id">
@@ -129,6 +135,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="editinputImage" class="form-label">Gambar</label>
+                        <input type="file" class="form-control" id="editinputImage" name="image">
+                    </div>
                     <div class="mb-3">
                         <label for="editInputNama" class="form-label">Nama</label>
                         <input type="text" class="form-control" id="editInputNama" name="nama"
@@ -167,6 +177,7 @@ let table1 = document.querySelector('#table1');
 let dataTable = new simpleDatatables.DataTable(table1);
 
 let editInputId = document.querySelector("#editInputId");
+// let editInputImage = document.querySelector("#editInputImage");
 let editInputNama = document.querySelector("#editInputNama");
 let editInputQuantity = document.querySelector("#editInputQuantity");
 let editInputHarga = document.querySelector("#editInputHarga");

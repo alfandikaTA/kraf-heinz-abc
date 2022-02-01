@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
@@ -11,13 +12,13 @@ use App\Http\Middleware\AdminIsNotLogin;
 
 Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
 
-  Route::namespace('Auth')->middleware(AdminIsNotLogin::class)->group(function(){
+  Route::namespace('Auth')->middleware(AdminIsNotLogin::class)->group(function () {
     // Login
     Route::get('/', [AdminAuthController::class, 'index'])->name('login');
     Route::post('/', [AdminAuthController::class, 'login'])->name('login-act');
   });
 
-  Route::namespace('Auth')->middleware(AdminIsLogin::class)->group(function(){
+  Route::namespace('Auth')->middleware(AdminIsLogin::class)->group(function () {
     // Auth 
     Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
 
@@ -30,14 +31,12 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
     // Route::patch('/barang', [AdminBarangController::class, 'update'])->name('barang-update');
     Route::delete('/barang/{id}', [AdminBarangController::class, 'delete'])->name('barang-delete');
 
+    // Toko 
+    Route::get('/toko', [AdminTokoController::class, 'index'])->name('toko');
+    Route::post('/toko', [AdminTokoController::class, 'update'])->name('toko-update');
+    Route::delete('/toko/{id}', [AdminTokoController::class, 'delete'])->name('toko-delete');
 
     // Pesanan 
     Route::get('/pesanan', [AdminPesananController::class, 'index'])->name('pesanan');
-
-    // Toko 
-    Route::get('/toko', [AdminTokoController::class, 'index'])->name('toko');
   });
-
 });
-
-?>

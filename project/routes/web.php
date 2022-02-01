@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\AuthController as UserAuthController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\BarangController as UserBarangController;
+use App\Http\Controllers\User\PesanBarangController as UserPesanBarangController;
+use App\Http\Controllers\User\PesananController as UserPesananController;
 
 
 
@@ -39,5 +41,15 @@ Route::name('user.')->namespace('User')->group(function () {
 
         // Barang
         Route::get('/barang', [UserBarangController::class, 'index'])->name('barang');
+
+        // Pesanbarang
+        Route::get('/pesanbarang', [UserPesanBarangController::class, 'index'])->name('pesanbarang');
+        Route::get('/cart/tambah/{id}', [UserPesanBarangController::class, 'do_tambah_cart'])->where("id", "[0-9]+");
+        Route::get('/cart', [UserPesanBarangController::class, 'cart']);
+        Route::get('/cart/hapus/{id}', [UserPesanBarangController::class, 'do_hapus_cart'])->where("id", "[0-9]+");
+        Route::get('/transaksi/tambah', [UserPesanBarangController::class, 'do_tambah_transaksi']);
+
+        // Pesanan
+        Route::get('/pesanan', [UserPesananController::class, 'index'])->name('pesanan');
     });
 });

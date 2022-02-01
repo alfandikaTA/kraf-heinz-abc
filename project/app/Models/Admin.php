@@ -18,3 +18,10 @@ class Admin extends Authenticatable
         $this->attributes['password'] = Hash::make($value);
     }
 }
+
+class Toko extends Model
+{
+    use HasFactory;
+
+    protected $fillable = ['nama_toko', 'name', 'telephone', 'alamat'];
+}

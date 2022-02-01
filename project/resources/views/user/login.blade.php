@@ -4,23 +4,23 @@
 
 @section('content')
 @if (session('error'))
-    <div class="alert alert-danger" role="alert">
-        {{ session('error') }}
-    </div>
+<div class="alert alert-danger" role="alert">
+    {{ session('error') }}
+</div>
 @endif
 
 @if (session('success'))
-    <div class="alert alert-success" role="alert">
-        <p><strong>{{ session('success') }}</strong></p>
-    </div>
+<div class="alert alert-success" role="alert">
+    <p><strong>{{ session('success') }}</strong></p>
+</div>
 @endif
 
-<form method="POST" >
-    @csrf 
+<form method="POST">
+    @csrf
 
     <div class="form-group mb-3">
         <label for="username">Username</label>
-        <input type="text" class="form-control" id="username" name="username" placeholder="masukan username">
+        <input type="text" class="form-control" id="email" name="email" placeholder="masukan username">
     </div>
     <div class="form-group">
         <label for="password">Password</label>

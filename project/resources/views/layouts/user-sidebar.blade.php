@@ -1,7 +1,7 @@
 <ul class="menu">
     <li class="sidebar-title">Menu User</li>
     <li class="sidebar-item {{ (request()->routeIs('user.dashboard')) ? 'active' : '' }}">
-        <a href="{{ route("admin.dashboard") }}" class='sidebar-link'>
+        <a href="{{ route("user.dashboard") }}" class='sidebar-link'>
             <i class="bi bi-grid-fill"></i>
             <span>Dashboard</span>
         </a>
@@ -12,14 +12,14 @@
             <span>Data Barang</span>
         </a>
     </li>
-    <li class="sidebar-item {{ (request()->routeIs('admin.toko')) ? 'active' : '' }}">
-        <a href="{{ route("admin.toko") }}" class='sidebar-link'>
+    <li class="sidebar-item {{ (request()->routeIs('user.pesanbarang')) ? 'active' : '' }}">
+        <a href="{{ route("user.pesanbarang") }}" class='sidebar-link'>
             <i class="bi bi-shop"></i>
             <span>Pesan Barang</span>
         </a>
     </li>
-    <li class="sidebar-item {{ (request()->routeIs('admin.pesanan')) ? 'active' : '' }}">
-        <a href="{{ route("admin.pesanan") }}" class='sidebar-link'>
+    <li class="sidebar-item {{ (request()->routeIs('user.pesanan')) ? 'active' : '' }}">
+        <a href="{{ route("user.pesanan") }}" class='sidebar-link'>
             <i class="bi bi-cart-fill"></i>
             <span>Data Pesanan Barang</span>
         </a>
@@ -33,7 +33,7 @@
         <i class="bi bi-box-arrow-left me-2"></i>Logout
     </a>
 
-    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
+    <form id="logout-form" action="{{ route('user.logout') }}" method="POST" class="d-none">
         @csrf
     </form>
 </div>
