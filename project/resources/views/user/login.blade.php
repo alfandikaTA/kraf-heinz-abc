@@ -3,6 +3,12 @@
 @section('title', 'Login')
 
 @section('content')
+
+<div class="text-center">
+    <h1 class="auth-title">Selamat Datang</h1>
+    <p class="auth-subtitle mb-5">Silahkan Masukan Username dan Password Untuk Masuk Kedalam Aplikasi</p>
+</div>
+
 @if (session('error'))
 <div class="alert alert-danger" role="alert">
     {{ session('error') }}

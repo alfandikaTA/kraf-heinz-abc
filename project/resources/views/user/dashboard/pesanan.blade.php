@@ -16,9 +16,6 @@
                 <div class="col-md-8">
                     <h3>Data barang</h3>
                 </div>
-                <div class="col-md-4 text-end">
-                    <a href="#" class="btn btn-success rounded-pill">Tambah data</a>
-                </div>
             </div>
         </div>
         <div class="card-body">
@@ -32,23 +29,22 @@
                         <th>Harga</th>
                         <th>Total Harga</th>
                         <th>Status Pesanan</th>
-                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @for ($i = 0; $i < 40; $i++) <tr>
+                    @foreach ($transaksis as $transaksi)
+                    @if (count($transaksi->transaksi_detail))
+                    <tr>
                         <td>1</td>
-                        <td>Barokah</td>
-                        <td>Kecap 135 ml</td>
-                        <td>2</td>
-                        <td>6.400</td>
-                        <td>12.800</td>
-                        <td>Sedang Disiapkan</td>
-                        <td>
-                            <span class="badge bg-success">Update Status</span>
-                        </td>
-                        </tr>
-                        @endfor
+
+                        <td>{{ $transaksi->id_barang }}</td>
+                        <td>{{ $transaksi->jumlah }}</td>
+                        <td>{{ $transaksi->harga }}</td>
+                        <td>{{ $transaksi->total_harga }}</td>
+                        <td>{{ $transaksi->status}}</td>
+                    </tr>
+                    @endif
+                    @endforeach
                 </tbody>
             </table>
         </div>

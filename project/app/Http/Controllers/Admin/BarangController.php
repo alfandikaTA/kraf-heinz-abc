@@ -63,7 +63,6 @@ class BarangController extends Controller
         $bar->delete_image();
         $bar->delete();
 
-
         if ($bar) {
             return redirect()->route('admin.barang')->with('success', 'Barang berhasil di hapus');
         } else {

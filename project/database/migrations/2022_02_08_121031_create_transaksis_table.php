@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class HeaderTransaksi extends Migration
+class CreateTransaksisTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,13 @@ class HeaderTransaksi extends Migration
      */
     public function up()
     {
-        Schema::create('header_transaksi', function (Blueprint $table) {
-            $table->id("id_header_transaksi");
-            $table->date("tanggal_transaksi");
+        Schema::create('transaksis', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId("user_id")
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->varchar('update')->default(0);
             $table->timestamps();
         });
     }
@@ -27,6 +31,6 @@ class HeaderTransaksi extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('header_transaksi');
+        Schema::dropIfExists('transaksis');
     }
 }

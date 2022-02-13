@@ -3,61 +3,67 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Barang;
-use App\Models\Detail_transaksi;
-use App\Models\Header_transaksi;
+use App\Models\transaksi;
+use App\Models\detail_transaksi;
+use App\Models\User;
+use Session;
 
 class PesanBarangController extends Controller
 {
-    public function index()
+
+    public function indexbarang()
     {
         $barang = Barang::all();
         return view('user.dashboard.pesanbarang', ['barangs' => $barang]);
-
-        // session()->forget("cart");
     }
 
-    function do_tambah_cart($id)
+
+    public function index()
     {
-        $cart = session("cart");
-        $barang = Barang::detail_barang($id);
-
-        $cart["id"] = [
-            "nama" => $barang->nama,
-            "harga" => $barang->harga,
-            "jumlah" => 1
-        ];
-
-        session(["cart" => $cart]);
-        return redirect("/cart");
+        $transaksi = Auth::guard('user')->user()->transaksi;
+        return view('user.dashboard.nota', ['transaksis' => $transaksi]);
     }
 
-    function cart()
+    public function bayar()
     {
-        //  session()->forget("cart");
-        $cart = session("cart");
-        return view("user.dashboard.cart")->with("cart", $cart);
-    }
+        // Pengecekan apakah di dalam keranjang ada barang ?
+        if ($carts = Session::get('cart')) {
 
-    function do_hapus_cart($id)
-    {
-        $cart = session("cart");
-        unset($cart[$id]);
-        session(["cart" => $cart]);
-        return redirect("/cart");
-    }
+            // Buat transaksi
+            // $transaksiId = User::find(1)->transaksi()->create();
+            $transaksiId = Auth::guard('user')->user()->transaksi()->create();
 
-    function do_tambah_transaksi()
-    {
-        $cart = session("cart");
-        $id_header_transaksi = Header_transaksi::tambah_header_transaksi();
-        foreach ($cart as $ct => $val) {
-            $id_barang = $ct;
-            $jumlah = $val["jumlah"];
-            Detail_transaksi::tambah_detail_transaksi($id_barang, $id_header_transaksi, $jumlah);
+            // Mengambil semua data barang, dan memasukkan nya ke dalam array
+            $data = array();
+            foreach ($carts as $barang) {
+                $item = [
+                    "barang_id" => $barang['id'],
+                    "quantity" => $barang['quantity']
+                ];
+                array_push($data, $item);
+            }
+
+            // Masukan data barang yang ada di kerjangan kedalam detail transaksi 
+            $transaksiId->transaksi_detail()->createMany($data);
+            Session::flash('success', 'Berhasil membayar');
+            return redirect()->route('user.nota');
         }
-        session()->forget("cart");
-        return redirect("/cart");
+
+        return redirect()->back();
+    }
+
+    public function cart()
+    {
+        return view('user.dashboard.cart');
+    }
+
+    public function nota()
+    {
+        // $transaksi = User::find(1)->transaksi()->get();
+        $transaksi = Auth::guard('user')->user->transaksi()->get();
+        return view('user.dashboard.nota', ['transaksis' => $transaksi]);
     }
 }

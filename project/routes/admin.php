@@ -28,7 +28,6 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
     // Barang
     Route::get('/barang', [AdminBarangController::class, 'index'])->name('barang');
     Route::post('/barang', [AdminBarangController::class, 'add'])->name('barang-add');
-    // Route::patch('/barang', [AdminBarangController::class, 'update'])->name('barang-update');
     Route::delete('/barang/{id}', [AdminBarangController::class, 'delete'])->name('barang-delete');
 
     // Toko 
@@ -38,5 +37,6 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
 
     // Pesanan 
     Route::get('/pesanan', [AdminPesananController::class, 'index'])->name('pesanan');
+    Route::post('/pesanan', [AdminPesananController::class, 'update'])->name('pesanan-update');
   });
 });

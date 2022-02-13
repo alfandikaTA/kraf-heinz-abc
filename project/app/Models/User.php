@@ -20,4 +20,9 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = Hash::make($value);
     }
+
+    public function transaksi()
+    {
+        return $this->hasMany(transaksi::class);
+    }
 }
