@@ -5,18 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Detail_transaksi extends Model
+class detail_transaksi extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id_barang', 'id_header_transaksi', 'jumlah'];
+    protected $fillable = [
+        'barang_id',
+        'quantity',
+    ];
 
-    static function tambah_detail_transaksi($id_barang, $id_header_transaksi, $jumlah)
+    public function transaksi()
     {
-        Detail_transaksi::create([
-            "id_barang" => $id_barang,
-            "id_header_transaksi" => $id_header_transaksi,
-            "jumlah" => $jumlah,
-        ]);
+        return $this->belongsTo(transaksi::class);
+    }
+
+    public function barang()
+    {
+        return $this->belongsTo(Barang::class);
     }
 }

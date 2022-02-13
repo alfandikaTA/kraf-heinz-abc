@@ -10,52 +10,58 @@
 
 
 @section('content')
-<a href="{{url('/pesanbarang')}}">Beli barang lagi</a><br>
+<div class="col-md-6">
+    <h4>Keranjang</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">No</th>
+                <th scope="col">Nama</th>
+                <th scope="col">Qty</th>
+                <th scope="col">Harga</th>
+                <th scope="col">#</th>
+            </tr>
+        </thead>
+        <tbody>
 
-@if(empty($cart) || count($cart) == 0)
-Tidak ada Barang di cart
-@else
-<table cellpadding="10" border="1">
-    <tr>
-        <th>No.</th>
-        <th>Nama</th>
-        <th>Harga</th>
-        <th>jumlah</th>
-        <th>Sub Total</th>
-        <th>&nbsp;</th>
-    </tr>
-    <?php
-    $no = 1;
-    $grandtotal = 0;
+            @if ($carts = Session::get('cart'))
+            {{-- {{ dd($carts) }} --}}
 
-    ?>
-    @foreach($cart as $ct => $val)
-    <?php
-    $subtotal = $val["harga"] * $val["jumlah"];
-    ?>
-    <tr>
-        <td>{{$no++}}</td>
-        <td>{{$val["nama"]}}</td>
-        <td>{{$val["harga"]}}</td>
-        <td>{{$val["jumlah"]}} Pcs</td>
-        <td>{{$subtotal}}</td>
-        <td>
-            <a href="{{url('/card/hapus/'.$ct)}}">Batal</a>
-        </td>
-    </tr>
-    <?php
-    $grandtotal += $subtotal;
-    ?>
-    @endforeach
-    <tr>
-        <th colspan="4">Grand Total</th>
-        <th>{{$grandtotal}}</th>
-        <th>&nbsp;</th>
-    </tr>
-</table>
+            @foreach ($carts as $barang)
+            <tr>
+                <form action="{{ route('user.update-from-cart') }}" method="post">
+                    @csrf
+                    <th scope="row">{{ $loop->index+1 }}</th>
+                    <td>{{ $barang['nama'] }}</td>
+                    <td><input type="number" name="quantity" value="{{ $barang['quantity'] }}" /></td>
+                    <td>{{ $barang['harga'] }}</td>
+                    <td class="justify-center mt-6 md:justify-end md:flex">
+                        <div class="h-10 w-28">
+                            <div class="relative flex flex-row w-full h-8">
+                                <input type="hidden" name="id" value="{{ @$barang['id'] }}">
+                                <input type="hidden" value="{{ @$barang->quantity }}"
+                                    class="w-6 text-center bg-gray-300" />
+                                <button type="submit" class="btn btn-warning">Update</button>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" href="{{ route('user.remove-from-cart', $barang['id']) }}">Hapus</a>
+                    </td>
+                </form>
+            </tr>
+            @endforeach
 
-<a href="{{url('/transaksi/tambah')}}">Beli</a>
-@endif
+            @endif
+        </tbody>
+    </table>
+
+    @if ($carts = Session::get('cart'))
+    <a href="{{ route('user.bayar')}}" class="btn btn-success">Bayar</a>
+    @endif
+
+    <a href="{{ route('user.pesanbarang')}}" class="btn btn-warning">kembali</a>
+</div>
 
 @endsection
 

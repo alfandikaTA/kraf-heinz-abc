@@ -17,9 +17,6 @@
                 <div class="col-md-8">
                     <h3>Data barang</h3>
                 </div>
-                <div class="col-md-4 text-end">
-                    <a href="#" class="btn btn-success rounded-pill">Tambah data</a>
-                </div>
             </div>
         </div>
         <div class="card-body">
@@ -37,24 +34,54 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @for ($i = 0; $i < 40; $i++) <tr>
+                    @foreach ($transaksis as $transaksi)
+                    @if (count($transaksi->transaksi_detail))
+                    <tr>
                         <td>1</td>
-                        <td>Barokah</td>
-                        <td>Kecap 135 ml</td>
-                        <td>2</td>
-                        <td>6.400</td>
-                        <td>12.800</td>
-                        <td>Sedang Disiapkan</td>
-                        <td>
-                            <span class="badge bg-success">Update Status</span>
-                        </td>
-                        </tr>
-                        @endfor
+                        <td>{{ $transaksi->id_toko }}</td>
+                        <td>{{ $transaksi->id_barang }}</td>
+                        <td>{{ $transaksi->harga }}</td>
+                        <td>{{ $transaksi->jumlah }}</td>
+                        <td>{{ $transaksi->harga }}</td>
+                        <td>{{ $transaksi->total_harga }}</td>
+                        <td><button type="button" class="btn btn-warning btn-edit btn-edit-pesanan"
+                                data-id="{{ $transaksi->id}}" data-update="{{ $transaksi->update}}"
+                                ddata-bs-toggle="modal" data-bs-toggle="modal" data-bs-target="#modalEdit">
+                                <i class="fas fa-edit">Edit Status</i>
+                            </button></td>
+                    </tr>
+                    @endif
+                    @endforeach
                 </tbody>
             </table>
         </div>
     </div>
 </section>
+
+<div class="modal fade" id="modalEdit" tabindex="-1" aria-labelledby="modalEdit" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered ">
+        <div class="modal-content">
+            <form method="POST" action="{{ route('admin.pesanan-update') }}">
+                @csrf
+
+                <input type="hidden" id="editInputId" name="id">
+                <div class="modal-header">
+                    <h5 class="modal-title">Update Status Pesanan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="editInputUpdate" class="form-label"></label>
+                        <input type="text" class="form-control" id="editInputUpdate" name="update" placeholder="">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-success">Simpan</button>
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 
@@ -64,5 +91,15 @@
 // Simple Datatable
 let table1 = document.querySelector('#table1');
 let dataTable = new simpleDatatables.DataTable(table1);
+
+let editInputId = document.querySelector("#editInputId");
+let editInputUpdate = document.querySelector("#editInputUpdate");
+const editButton = document.querySelectorAll(".btn-edit-pesanan");
+editButton.forEach(element => {
+    element.addEventListener('click', (e) => {
+        editInputNamaToko.value = element.dataset.update;
+        editInputId.value = element.dataset.id;
+    })
+});
 </script>
 @endsection

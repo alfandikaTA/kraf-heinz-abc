@@ -4,6 +4,10 @@
 
 @section('content')
 
+<div class="text-center">
+    <h6 class="auth-title">Silahkan Lengkapi Data DiBawah ini</h1>
+</div>
+
 @if (session('error'))
 <div class="alert alert-danger" role="alert">
     {{ session('error') }}
