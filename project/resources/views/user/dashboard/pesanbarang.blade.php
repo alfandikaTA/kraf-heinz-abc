@@ -14,8 +14,15 @@
     <div class="container py-5">
         @if ($message = Session::get('success'))
         <div class="alert alert-success alert-block">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            <strong>{{ $message }}</strong>
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>{{ $message }}</strong>
+                </div>
+                <div class="col-md-4 text-end">
+                    <a href="{{ route('user.cart') }}">Lihat Keranjang</a>
+                </div>
+            </div>
         </div>
         @endif
         <div class="card">

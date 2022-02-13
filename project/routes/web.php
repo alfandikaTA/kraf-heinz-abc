@@ -42,12 +42,12 @@ Route::name('user.')->namespace('User')->group(function () {
         // Barang
         Route::get('/barang', [UserBarangController::class, 'index'])->name('barang');
         Route::get('/add-to-cart/{id}', [UserBarangController::class, 'addToCart'])->name('add-to-cart');
-        Route::get('/remvoe-from-cart/{id}', [UserBarangController::class, 'removeFromCart'])->name('remove-from-cart');
+        Route::get('/remove-from-cart/{id}', [UserBarangController::class, 'removeFromCart'])->name('remove-from-cart');
         Route::post('/update-form-cart', [UserBarangController::class, 'updateFromCart'])->name('update-from-cart');
 
         // Pesanbarang
         Route::get('/pesanbarang', [UserPesanBarangController::class, 'indexbarang'])->name('pesanbarang');
-        Route::get('/cart', [UserPesanBarangController::class, 'cart']);
+        Route::get('/cart', [UserPesanBarangController::class, 'cart'])->name('cart');
         // Route::get('/cart', [UserPesanBarangController::class, 'index'])->name('transaksi');
         Route::get('/bayar', [UserPesanBarangController::class, 'bayar'])->name('bayar');
         Route::get('/nota', [UserPesanBarangController::class, 'nota'])->name('nota');

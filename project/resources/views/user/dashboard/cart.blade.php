@@ -10,58 +10,74 @@
 
 
 @section('content')
-<div class="col-md-6">
-    <h4>Keranjang</h4>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">No</th>
-                <th scope="col">Nama</th>
-                <th scope="col">Qty</th>
-                <th scope="col">Harga</th>
-                <th scope="col">#</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            @if ($carts = Session::get('cart'))
-            {{-- {{ dd($carts) }} --}}
-
-            @foreach ($carts as $barang)
-            <tr>
-                <form action="{{ route('user.update-from-cart') }}" method="post">
-                    @csrf
-                    <th scope="row">{{ $loop->index+1 }}</th>
-                    <td>{{ $barang['nama'] }}</td>
-                    <td><input type="number" name="quantity" value="{{ $barang['quantity'] }}" /></td>
-                    <td>{{ $barang['harga'] }}</td>
-                    <td class="justify-center mt-6 md:justify-end md:flex">
-                        <div class="h-10 w-28">
-                            <div class="relative flex flex-row w-full h-8">
-                                <input type="hidden" name="id" value="{{ @$barang['id'] }}">
-                                <input type="hidden" value="{{ @$barang->quantity }}"
-                                    class="w-6 text-center bg-gray-300" />
-                                <button type="submit" class="btn btn-warning">Update</button>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <a class="btn btn-danger" href="{{ route('user.remove-from-cart', $barang['id']) }}">Hapus</a>
-                    </td>
-                </form>
-            </tr>
-            @endforeach
-
+<section class="section">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-8">
+                    <h3>Keranjang</h3>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <a href="{{ route('user.pesanbarang')}}" class="btn btn-warning mb-3">kembali</a>
+            @if (session('success'))
+                <div class="alert alert-success" role="alert">
+                    <p><strong>{{ session('success') }}</strong></p>
+                </div>
             @endif
-        </tbody>
-    </table>
-
-    @if ($carts = Session::get('cart'))
-    <a href="{{ route('user.bayar')}}" class="btn btn-success">Bayar</a>
-    @endif
-
-    <a href="{{ route('user.pesanbarang')}}" class="btn btn-warning">kembali</a>
-</div>
+            
+            <form method="POST" action="{{ route('user.update-from-cart') }}">
+                @csrf
+                <table class="table mb-5">
+                    <thead>
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Nama</th>
+                            <th scope="col">Qty</th>
+                            <th scope="col">Harga</th>
+                            <th scope="col">#</th>
+                        </tr>
+                    </thead>
+                    <tbody>        
+                        @php $total = 0 @endphp
+                        @if(session('cart'))
+                            @foreach(session('cart') as $id => $details)
+                                @php $total += $details['harga'] * $details['quantity'] @endphp
+                                <tr data-id="{{ $id }}">
+                                    <th scope="row">{{ $loop->index+1 }}</th>
+                                    <td>{{ $details['nama'] }}</td>
+                                    <td><input type="number" name="quantity[]" value="{{ $details['quantity'] }}" /></td>
+                                    <td>{{ $details['harga'] }}</td>
+                                    <td>
+                                        <a class="btn btn-danger" href="{{ route('user.remove-from-cart', $details['id']) }}">Hapus</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
+            
+                    </tbody>
+                </table>
+                <div
+                    class="text-end"
+                >
+                    <p
+                        style="
+                            font-size: 24px;
+                            font-weight: 600;
+                        "
+                    >Total : {{ $total }}</p>
+                    @if ($carts = Session::get('cart'))
+                        <a href="{{ route('user.bayar')}}" class="btn btn-success">Bayar</a>
+                        <button class="btn btn-info" type="submit">Update</button>
+                    @endif
+                </div>
+            </form>
+        
+           
+        </div>
+    </div>
+</section>
 
 @endsection
 

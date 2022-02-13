@@ -57,6 +57,7 @@ class PesanBarangController extends Controller
 
     public function cart()
     {
+        // Session::flush();
         return view('user.dashboard.cart');
     }
 
